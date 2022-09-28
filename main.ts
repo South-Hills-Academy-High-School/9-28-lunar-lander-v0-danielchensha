@@ -1,10 +1,18 @@
 namespace SpriteKind {
     export const map = SpriteKind.create()
+    export const rocketengine = SpriteKind.create()
 }
+controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
+    mySprite.ay = -25
+})
 scene.onOverlapTile(SpriteKind.Player, sprites.builtin.oceanSand6, function (sprite, location) {
     mySprite.setVelocity(0, -1)
 })
+controller.B.onEvent(ControllerButtonEvent.Released, function () {
+    mySprite.ay = 20
+})
 let mySprite: Sprite = null
+let angle = 0
 scene.setBackgroundImage(img`
     8888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
     8888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
@@ -147,6 +155,10 @@ mySprite = sprites.create(img`
     . . . . . . . . . . c c c . . . 
     . . . . . . . . . . . . . . . . 
     `, SpriteKind.Player)
+let mySprite3 = sprites.create(img`
+    f 5 
+    5 f 
+    `, SpriteKind.rocketengine)
 scene.cameraFollowSprite(mySprite)
 scaling.scaleByPercent(mySprite, -25, ScaleDirection.Uniformly, ScaleAnchor.Middle)
 mySprite.ay = 20
@@ -158,4 +170,5 @@ game.onUpdate(function () {
     minimap.includeSprite(myMinimap, mySprite)
     mySprite2 = sprites.create(minimap.getImage(myMinimap), SpriteKind.map)
     mySprite2.setPosition(mySprite.left, mySprite.top)
+    mySprite3.setPosition(mySprite.x, mySprite.y)
 })
